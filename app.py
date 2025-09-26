@@ -3,7 +3,7 @@ import io
 import uuid
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-from gtts import gTTS
+from app import gTTS
 
 app = Flask(__name__)
 CORS(app)
