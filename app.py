@@ -67,7 +67,7 @@ def text_to_speech():
         
         # Adjust rate for slow speech
         if slow:
-            rate = "-30%"  # Much slower
+            rate = "-15%"  # slower
         else:
             rate = "+0%"   # Normal speed
         
