@@ -21,21 +21,9 @@ VOICE_MAPPING = {
     },
 }
 
-def has_ssml_tags(text):
-    """Check if text contains SSML tags"""
-    ssml_tags = ['<break', '<emphasis', '<prosody', '<say-as', '<phoneme', '<sub']
-    return any(tag in text.lower() for tag in ssml_tags)
-
 async def generate_speech(text, voice, rate="+0%"):
     """Generate speech using edge-tts"""
-    # Check if text contains SSML tags
-    if has_ssml_tags(text):
-        # For SSML, don't pass rate parameter as it's handled in SSML
-        communicate = edge_tts.Communicate(text, voice)
-    else:
-        # For plain text, use rate parameter
-        communicate = edge_tts.Communicate(text, voice, rate=rate)
-    
+    communicate = edge_tts.Communicate(text, voice, rate=rate)
     audio_data = b""
     
     async for chunk in communicate.stream():
