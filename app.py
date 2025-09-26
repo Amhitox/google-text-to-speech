@@ -21,8 +21,21 @@ VOICE_MAPPING = {
     },
 }
 
+def wrap_text_in_ssml(text):
+    """Wrap text in proper SSML format"""
+    return f'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">{text}</speak>'
+
+def has_ssml_tags(text):
+    """Check if text contains SSML tags"""
+    ssml_tags = ['<break', '<emphasis', '<prosody', '<say-as', '<phoneme', '<sub']
+    return any(tag in text.lower() for tag in ssml_tags)
+
 async def generate_speech(text, voice, rate="+0%"):
     """Generate speech using edge-tts"""
+    if has_ssml_tags(text):
+        text = wrap_text_in_ssml(text)
+        
+    
     communicate = edge_tts.Communicate(text, voice, rate=rate)
     audio_data = b""
     
